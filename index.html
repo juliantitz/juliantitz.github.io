@@ -1,6 +1,170 @@
 <!DOCTYPE html>
-<html>
-    <body>
-        <h1>Global Sourcing Project</h1>
-    </body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Animal Outfit Generator</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css" media="all" />
+    <!-- include jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="outfit-generator">
+      <div class="generator-head">
+        <div class="container">
+          <h1>AI Animal Outfit Generator</h1>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad</p>
+        </div>
+      </div>
+      <div class="generator-block">
+        <div class="container">
+          <form>
+            <div class="dropdown-list">
+              <div class="drop-box">
+                <p>PICK YOUR ANIMAL</p>
+                <!-- create a select field with common animal name options -->
+                <select class="form-select" aria-label="form-select" name="animal" id="animal">
+                  <option value="lion">Lion</option>
+                  <option value="tiger">Tiger</option>
+                  <option value="elephant">Elephant</option>
+                  <option value="cat">Cat</option>
+                  <option value="dog">Dog</option>
+                  <option value="rat">Rat</option>
+                  <option value="bird">Bird</option>
+                  <option value="rabbit">Rabbit</option>
+                  <option value="hamster">Hamster</option>
+                  <option value="zebra">Zebra</option>
+                </select>
+              </div>
+              <div class="drop-box">
+                <p>WHAT OUTFIT?</p>
+                <!-- create a select field with options: Tuxedo, Gown, Pyjama, Shirt and Jeans, T-Shirt and Jeans -->
+                <select class="form-select" aria-label="form-select" name="outfit" id="outfit">
+                  <option value="tuxedo">Tuxedo</option>
+                  <option value="leather-jacket">Leather Jacket</option>
+                  <option value="wedding-gown">Wedding Gown</option>
+                  <option value="minidress">Mini Dress</option>
+                  <option value="pyjama">Pyjama</option>
+                  <option value="shirt_and_jeans">Shirt and Jeans</option>
+                  <option value="t-shirt_and_jeans">T-Shirt and Jeans</option>
+                  <option value="swimming-costume">Swimming Costume</option>
+                  <option value="bath-robe">Bath Robe</option>
+                  <option value="bikini">Bikini</option>
+                </select>
+              </div>
+              <div class="drop-box">
+                <p>IN FRONT OF?</p>
+                <!-- create a select field with options Hotel, Mansion, Club, Pool -->
+                <select class="form-select" aria-label="form-select" name="background" id="background">
+                  <option value="hotel">Hotel</option>
+                  <option value="mansion">Mansion</option>
+                  <option value="club">Club</option>
+                  <option value="pool">Pool</option>
+                  <option value="beach">Beach</option>
+                  <option value="mountains">Mountains</option>
+                </select>
+              </div>
+
+              <div class="drop-box">
+                <p>IMAGE STYLE?</p>
+                <!-- create a select field with options Photo, Drawing, Oil Painting, Pencil Drawing -->
+                <select class="form-select" aria-label="form-select" name="style" id="style">
+                  <option value="photo">Photo</option>
+                  <option value="drawing">Drawing</option>
+                  <option value="oil-painting">Oil Painting</option>
+                  <option value="pencil-drawing">Pencil Drawing</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="cta-block">
+              <button type="button" id="generate-button" class="btn btn-primary g-img">Generate Image</button>
+              <button type="button" id="download-button" class="btn btn-primary s-img disabled"><img src="images/download.svg" alt="icon" /> Download Image</button>
+            </div>
+            <div class="generator-image"></div>
+          </form>
+        </div>
+      </div>
+      <div class="faq-block">
+        <div class="container">
+          <h2>Frequently Asked Questions (FAQ)</h2>
+          <div class="text">
+            <h3>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam</h3>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad</p>
+          </div>
+          <div class="text">
+            <h3>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam</h3>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad</p>
+          </div>
+          <div class="text">
+            <h3>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam</h3>
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="container">
+        <p>
+          <img src="images/drop-mail.svg" alt="mail" /> <a href="mailto:"> Contact us <img src="images/right-arrow.svg" alt="arrow" /></a>
+        </p>
+      </div>
+    </footer>
+    <script>
+      $(document).ready(function () {
+        $("button#generate-button").click(function (e) {
+          e.preventDefault();
+          /* Change button label to "Generating..." and disable the button */
+          $("button#generate-button").text("Generating...").prop("disabled", true).addClass("disabled");
+          /* Add disabled class to download button */
+          $("button#download-button").addClass("disabled");
+
+          $(".generator-image").empty();
+          /* get the option labels from the select fields */
+          var animal = $("#animal option:selected").text();
+          var outfit = $("#outfit option:selected").text();
+          var background = $("#background option:selected").text();
+          var style = $("#style option:selected").text();
+
+          /* Send an AJAX request to the server with the selected options */
+
+          /* check if the page is loading on a server */
+          if (window.location.href.indexOf("localhost") == -1) {
+            url = "http://dev.cybertronindia.com/animal-outfit-generator-generate/";
+          } else {
+            url = "http://localhost:8888/animal-outfit-generator/generate.php";
+          }
+
+          $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+              animal: animal,
+              outfit: outfit,
+              background: background,
+              style: style,
+            },
+            success: function (data) {
+              $(".generator-image").append('<img src="' + data + '" alt="image" />');
+              /* Change button label to "Generate Image" and enable the button */
+              $("button#generate-button").text("Generate Image").prop("disabled", false).removeClass("disabled");
+              /* Remove disabled class from download button */
+              $("button#download-button").removeClass("disabled");
+            },
+          });
+        });
+
+        /* Download the image to user's device on click of Download file button */
+        $("button#download-button").click(function (e) {
+          e.preventDefault();
+          var image = $(".generator-image img").attr("src");
+          if (image) {
+            window.open(image, "_blank");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
